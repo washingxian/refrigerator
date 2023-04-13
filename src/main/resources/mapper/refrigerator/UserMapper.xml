@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szu.refrigerator.mapper.UserMapper">
+
+
+    <insert id="updateAll">
+        insert  into  `user` (
+            `uid` ,
+            `name` ,
+            `avatar` ,
+            `phoneNumber` ,
+            `age` ,
+            `gender` 
+        )
+        values
+        <foreach collection="list" separator="," item="item">
+            (
+                #{item.uid} ,
+                #{item.name} ,
+                #{item.avatar} ,
+                #{item.phoneNumber} ,
+                #{item.age} ,
+                #{item.gender} 
+            )
+        </foreach>
+        on duplicate key  update
+
+        `uid`= values(  `uid`),
+        `name`= values(  `name`),
+        `avatar`= values(  `avatar`),
+        `phoneNumber`= values(  `phoneNumber`),
+        `age`= values(  `age`),
+        `gender`= values(  `gender`)
+    </insert>
+</mapper>

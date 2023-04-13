@@ -1,0 +1,88 @@
+server-address: http://139.9.214.186:9090
+ocrServerAddress: http://139.9.214.186:5000
+mappings:
+  objects:
+    - name: apple # 名称，仅用于提示作用，不会用于代码中
+      id: 0       # 训练数据时用的id
+      fridgeId: 9 # 对应数据库中物品的id. -1表示数据库中没有该物品数据，将不会出现在检测结果中
+    - name: banana
+      id: 1
+      fridgeId: 11
+    - name: pear
+      id: 2
+      fridgeId: 20
+    - name: watermelon
+      id: 3
+      fridgeId: 24
+    - name: garlic
+      id: 4
+      fridgeId: 43
+    - name: lettuce
+      id: 5
+      fridgeId: -1
+    - name: onion
+      id: 6
+      fridgeId: 39
+    - name: pepper
+      id: 7
+      fridgeId: -1
+    - name: potato
+      id: 8
+      fridgeId: 37
+    - name: sweet_potato
+      id: 9
+      fridgeId: -1
+    - name: tomato
+      id: 10
+      fridgeId: 92
+    - name: cabbage
+      id: 11
+      fridgeId: 22
+    - name: carrot
+      id: 12
+      fridgeId: 36
+    - name: celery
+      id: 13
+      fridgeId: 35
+    - name: chinese_cabbage
+      id: 14
+      fridgeId: 26
+    - name: cucumber
+      id: 15
+      fridgeId: 48
+    - name: egg
+      id: 16
+      fridgeId: 84
+    - name: peach
+      id: 17
+      fridge-id: -1
+    - name: persimmon # 柿子
+      id: 18
+      fridge-id: -1
+    - name: pitaya    # 火龙果
+      id: 19
+      fridge-id: -1
+    - name: plum      # 梅子
+      id: 20
+      fridge-id: -1
+    - name: pomegranate # 石榴
+      id: 21
+      fridge-id: -1
+    - name: carambola  # 杨桃
+      id: 22
+      fridge-id: -1
+    - name: guava    # 番石榴
+      id: 23
+      fridge-id: -1
+    - name: kiwi     # 奇异果
+      id: 24
+      fridge-id: -1
+    - name: mango    # 芒果
+      id: 25
+      fridge-id: -1
+    - name: muskmelon # 甜瓜
+      id: 26
+      fridge-id: -1
+    - name: orange
+      id: 27
+      fridge-id: 52

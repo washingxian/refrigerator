@@ -1,0 +1,17 @@
+{
+  "outPath": "./src/main/resources/static/冰箱管家接口文档",
+  "pathPrefix": "",
+  "allInOne": true,
+  "style": "a11y-dark",
+  "projectName": "冰箱资源管理",
+  "inlineEnum": false,
+  "packageFilters": "com.szu.refrigerator.controller.*",
+  "dataDictionaries": [
+    {
+      "title": "常见返回码",
+      "enumClassName": "com.szu.refrigerator.Enum.Code",
+      "codeField": "code",
+      "descField": "msg"
+    }
+  ]
+}

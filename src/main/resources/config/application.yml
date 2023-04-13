@@ -1,0 +1,68 @@
+server:
+  port: 8081
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 300MB
+      file-size-threshold: 0
+      max-request-size: 500MB
+  application:
+    name: refrigerator
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://139.9.214.186:3306/refrigerator?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: xhc
+      password: 123456
+
+grpc:
+  client:
+    object-detector-server:
+      address: 'static://139.9.214.186:50051'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+
+mybatis-plus:
+
+  configuration:
+    #???????????????????????????????????????
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+
+
+#小程序ID
+AppID: wx31eb913ec94b820a
+#小程序密钥
+AppSecret: f4619ae9dff3d497f38333ae8d85bf61
+
+serverIpAddress: 139.9.214.186
+
+#型号，品牌和物品类型图片路径前缀
+staticResourcesPath: /resources/
+modelImgPath: /resources/images/modelImg/
+objectImgPath: /resources/images/objectImg/
+brandImgPath: /resources/images/brandImg/
+
+
+#这里的图片是需要上传的用的是相对路径
+avatarImgPath: images/avatarImg/
+
+color_normal: "#ffd08c"
+
+
+#快过期时显示的颜色
+color_close_to_out_of_day: "#FFCF8B"
+
+
+#过期时显示的颜色
+color_out_of_day: "#faaca2"
+
+#还剩x天显示快过期
+close_to_out_of_day: 7

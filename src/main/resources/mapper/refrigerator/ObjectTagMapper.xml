@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szu.refrigerator.mapper.ObjectTagMapper">
+
+
+    <insert id="updateAll">
+        insert  into  `object_tag` (
+            `tag_id` ,
+            `tag` 
+        )
+        values
+        <foreach collection="list" separator="," item="item">
+            (
+                #{item.tag_id} ,
+                #{item.tag} 
+            )
+        </foreach>
+        on duplicate key  update
+
+        `tag_id`= values(  `tag_id`),
+        `tag`= values(  `tag`)
+    </insert>
+</mapper>

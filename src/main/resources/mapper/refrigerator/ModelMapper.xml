@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szu.refrigerator.mapper.ModelMapper">
+
+    <resultMap id="brand" type="com.szu.refrigerator.entity.Brand" >
+        <id property="bid" column="bid"></id>
+        <result property="name" column="b_name"></result>
+    </resultMap>
+
+
+    <resultMap id="model" type="com.szu.refrigerator.entity.Model">
+        <id property="mid" column="mid"/>
+        <result property="name" column="m_name"/>
+        <result property="bid" column="bid"/>
+        <result property="imgSrc" column="m_imgSrc"/>
+    </resultMap>
+
+    <resultMap id="getAllModelInfo" type="com.szu.refrigerator.dto.controllerDto.model.result.GetAllModelInfoResultDto">
+        <id  column="bid"></id>
+        <association property="brand" resultMap="brand" />
+        <collection property="modelList" resultMap="model"/>
+    </resultMap>
+
+
+
+    <insert id="updateAll">
+        insert  into  `model` (
+            `mid` ,
+            `name` ,
+            `structure` ,
+            `bid` 
+        )
+        values
+        <foreach collection="list" separator="," item="item">
+            (
+                #{item.mid} ,
+                #{item.name} ,
+                #{item.structure} ,
+                #{item.bid} 
+            )
+        </foreach>
+        on duplicate key  update
+
+        `mid`= values(  `mid`),
+        `name`= values(  `name`),
+        `structure`= values(  `structure`),
+        `bid`= values(  `bid`)
+    </insert>
+    <select id="getAllModelInfo"
+            resultMap="getAllModelInfo">
+
+        SELECT a.bid , a.name AS b_name, b.mid,b.name AS m_name,b.bid,b.imgSrc as m_imgSrc
+        FROM `brand` a
+                 LEFT JOIN `model` b
+                           ON a.bid = b.bid
+    </select>
+</mapper>

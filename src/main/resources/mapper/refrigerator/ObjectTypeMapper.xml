@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szu.refrigerator.mapper.ObjectTypeMapper">
+
+    <resultMap id="GetAllObjectTypeResult" type="com.szu.refrigerator.dto.controllerDto.objectType.result.GetAllObjectTypeResultDto">
+        <id property="classification" column="classification"></id>
+        <collection property="objectTypeList" javaType="java.util.List"  ofType="com.szu.refrigerator.entity.ObjectType">
+            <id property="otId" column="otId"></id>
+            <result property="classification" column="classification"></result>
+            <result property="name" column="name"/>
+            <result property="warrantTime" column="warrantTime"/>
+            <result property="imgSrc" column="imgSrc"/>
+        </collection>
+    </resultMap>
+
+
+    <insert id="updateAll">
+        insert  into  `object_type` (
+            `otId` ,
+            `name` ,
+            `warrantTime` ,
+            `classification` 
+        )
+        values
+        <foreach collection="list" separator="," item="item">
+            (
+                #{item.otId} ,
+                #{item.name} ,
+                #{item.warrantTime} ,
+                #{item.classification} 
+            )
+        </foreach>
+        on duplicate key  update
+
+        `otId`= values(  `otId`),
+        `name`= values(  `name`),
+        `warrantTime`= values(  `warrantTime`),
+        `classification`= values(  `classification`)
+    </insert>
+
+
+
+    <select id="getObjectsOfSpecifiedClassification"
+            resultType="com.szu.refrigerator.dto.controllerDto.object.result.GetObjectsOfSpecifiedClassificationResultDto">
+
+        SELECT otId AS typeId,NAME,warrantTime,imgSrc FROM   `object_type`   WHERE classification  = #{classification}
+
+    </select>
+    <select id="getAllObjectType"
+           resultMap="GetAllObjectTypeResult">
+      select  * from object_type
+
+    </select>
+
+
+</mapper>

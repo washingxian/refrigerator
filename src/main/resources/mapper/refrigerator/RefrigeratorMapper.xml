@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szu.refrigerator.mapper.RefrigeratorMapper">
+
+
+    <insert id="updateAll">
+        insert  into  `refrigerator` (
+            `fid` ,
+            `name` ,
+            `mid` 
+        )
+        values
+        <foreach collection="list" separator="," item="item">
+            (
+                #{item.fid} ,
+                #{item.name} ,
+                #{item.mid} 
+            )
+        </foreach>
+        on duplicate key  update
+
+        `fid`= values(  `fid`),
+        `name`= values(  `name`),
+        `mid`= values(  `mid`)
+    </insert>
+
+
+
+    <select id="getUserRefrigerator"
+            resultType="com.szu.refrigerator.dto.controllerDto.fridge.result.GetUserRefrigeratorResultDto">
+
+        SELECT a.fid,a.fDefault,b.name as name ,c.imgSrc as backgroundUrl,c.bid,b.mid,d.name AS brand ,c.name AS model
+        FROM user_refrigerator a
+                 LEFT JOIN refrigerator b ON a.fid = b.fid
+                 LEFT JOIN model c ON b.mid = c.mid
+                 LEFT JOIN brand d ON c.bid = d.bid
+    where uid = #{uid}
+
+  </select>
+    <select id="getCurrentRefrigeratorStructure" resultType="java.lang.String">
+        select  structure from user_refrigerator a
+    left join refrigerator b on a.fid = b.fid
+left join model c on b.mid = c.mid
+where a.fDefault = 1 and a.uid =#{uid}
+
+    </select>
+
+
+</mapper>

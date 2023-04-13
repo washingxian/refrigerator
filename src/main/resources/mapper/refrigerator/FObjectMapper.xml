@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szu.refrigerator.mapper.FObjectMapper">
+    
+    <insert id="insertAll">
+        insert  into  `f_object` (
+        `typeId` ,
+        `fid` ,
+          `location`,
+        `warrantTime`
+        )
+        values
+        <foreach collection="list" separator="," item="item">
+            (
+            #{item.typeId} ,
+            #{item.fid} ,
+            #{item.location} ,
+            #{item.warrantTime}
+            )
+        </foreach>
+    </insert>
+    
+    <insert id="updateAll">
+        insert  into  `f_object` (
+            `oid` ,
+            `typeId` ,
+            `fid` ,
+        `location` ,
+            `warrantTime` ,
+        )
+        values
+        <foreach collection="list" separator="," item="item">
+            (
+                #{item.oid} ,
+                #{item.typeId} ,
+                #{item.fid} ,
+            #{item.location} ,
+                #{item.warrantTime} ,
+            )
+        </foreach>
+        on duplicate key  update
+        `oid`= values(`oid`),
+        `typeId`= values(`typeId`),
+        `fid`= values(`fid`),
+        `location`= values(`location`),
+        `warrantTime`= values(`warrantTime`),
+    </insert>
+
+
+
+
+    <delete id="takeOutObjects">
+        DELETE FROM `f_object`  WHERE oid IN
+                                      (SELECT a.* FROM
+                                          (
+                                              SELECT oid FROM `f_object` WHERE fid = #{fid} AND typeId = #{typeId} and location = #{location}
+
+                                            ORDER BY (warrantTime - DATEDIFF(CURRENT_DATE(),storedDate))
+                                                  LIMIT #{num}
+                                          ) a
+                                      )
+
+    </delete>
+
+
+
+    <select id="getDefaultFridgeObjects"
+            resultType="com.szu.refrigerator.dto.controllerDto.object.result.FetFridgeObjectResultDto">
+
+        SELECT  MIN(a.warrantTime - DATEDIFF(CURRENT_DATE(),storedDate))AS shortestWarrantyTime,COUNT(*) AS num  ,b.imgSrc ,b.`name` AS `name`,
+                a.typeId,b.imgSrc,a.location,b.classification
+        FROM `f_object` a
+                 LEFT JOIN `object_type` b ON a.typeId = b.otId
+        WHERE fid = (
+            SELECT fid FROM `user_refrigerator`  WHERE uid = #{uid} AND fDefault = 1)
+        GROUP BY typeId,location
+    </select>
+
+
+
+    <select id="getFridgeObjects"
+            resultType="com.szu.refrigerator.dto.controllerDto.object.result.FetFridgeObjectResultDto">
+
+        SELECT  MIN(a.warrantTime - DATEDIFF(CURRENT_DATE(),storedDate))AS shortestWarrantyTime,COUNT(*) AS num  ,b.imgSrc ,b.`name` as name,a.typeId,b.imgSrc,a.locaion
+        FROM `f_object` a
+                 LEFT JOIN `object_type` b ON a.typeId = b.otId
+        WHERE fid = #{fid}
+        GROUP BY typeId
+    </select>
+
+
+
+
+</mapper>
